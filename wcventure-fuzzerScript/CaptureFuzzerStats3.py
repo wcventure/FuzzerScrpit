@@ -18,20 +18,20 @@ def main(argv):
 
     try:
 
-        opts, args = getopt.getopt(argv, "ht:o:T:O:d:", ["help", "TargetFile=","OutputPath=","DelayTime="])
+        opts, args = getopt.getopt(argv, "ht:o:T:O:x:y:d:", ["help", "TargetFile=","OutputPath=","DelayTime="])
 
 
 
     except getopt.GetoptError:
-        print('Error: CaptureFuzzerStats.py -t <TargetFile1> -o <OutputPath2> -T <TargetFile2> -O <OutputPath2> -d <DelayTime>')
-        print('   or: CaptureFuzzerStats.py --target1=<TargetFile1> --output1=<OutputPath1> --target2=<TargetFile2> --output2=<OutputPath2> --delay <DelayTime>')
+        print('Error: CaptureFuzzerStats.py -t <TargetFile1> -o <OutputPath2> -T <TargetFile2> -O <OutputPath2> -x <TargetFile3> -y <OutputPath3> -d <DelayTime>')
+        print('   or: CaptureFuzzerStats.py --target1=<TargetFile1> --output1=<OutputPath1> --target2=<TargetFile2> --output2=<OutputPath2> --target3=<TargetFile3> --output3=<OutputPath3> --delay <DelayTime>')
         sys.exit(2)
 
     # 处理 返回值options是以元组为元素的列表。
     for opt, arg in opts:
         if opt in ("-h", "--help"):
-            print('CaptureFuzzerStats.py -t <TargetFile1> -o <OutputPath2> -T <TargetFile2> -O <OutputPath2> -d <DelayTime>')
-            print('or: CaptureFuzzerStats.py --target1=<TargetFile1> --output1=<OutputPath1> --target2=<TargetFile2> --output2=<OutputPath2> --delay <DelayTime>')
+            print('CaptureFuzzerStats.py -t <TargetFile1> -o <OutputPath2> -T <TargetFile2> -O <OutputPath2> -x <TargetFile3> -y <OutputPath3> -d <DelayTime>')
+            print('or: CaptureFuzzerStats.py --target1=<TargetFile1> --output1=<OutputPath1> --target2=<TargetFile2> --output2=<OutputPath2> --target3=<TargetFile3> --output3=<OutputPath3> --delay <DelayTime>')
             sys.exit()
         elif opt in ("-t", "--target1"):
             TargetFile = arg
@@ -41,6 +41,10 @@ def main(argv):
             TargetFile2 = arg
         elif opt in ("-O", "--output2"):
             OutputPath2 = arg
+        elif opt in ("-x", "--target3"):
+            TargetFile3 = arg
+        elif opt in ("-t", "--output3"):
+            OutputPath3 = arg
         elif opt in ("-d", "--delay"):
             DelayTime = arg
 
@@ -60,6 +64,14 @@ def main(argv):
         print('Error: Crash folder is empty')
         print('Tips: Using -h to view help')
         sys.exit(2)
+    if TargetFile3 == "":
+        print('Error: Command line is empty')
+        print('Tips: Using -h to view help')
+        sysexit(2)
+    if OutputPath3 == "":
+        print('Error: Crash folder is empty')
+        print('Tips: Using -h to view help')
+        sys.exit(2)
     if DelayTime == "":
         print('Error: Crash folder is empty')
         print('Tips: Using -h to view help')
@@ -74,6 +86,8 @@ def main(argv):
     print('Output Path1 =', OutputPath)
     print('Target file2 = ', TargetFile2)
     print('Output Path2 =', OutputPath2)
+    print('Target file3 = ', TargetFile3)
+    print('Output Path3 =', OutputPath3)
     print('Delay Time =', DelayTime)
     print('')        
 
@@ -93,8 +107,10 @@ def main(argv):
             name = str(k)
         os.system("cp " + TargetFile + " " + OutputPath + name + ".txt")
         os.system("cp " + TargetFile2 + " " + OutputPath2 + name + ".txt")
+        os.system("cp " + TargetFile3 + " " + OutputPath3 + name + ".txt")
         print("cp " + TargetFile + " " + OutputPath + name + ".txt")
         print("cp " + TargetFile2 + " " + OutputPath2 + name + ".txt")
+        print("cp " + TargetFile3 + " " + OutputPath3 + name + ".txt")
 
     print("\nFinished: ALL")
 

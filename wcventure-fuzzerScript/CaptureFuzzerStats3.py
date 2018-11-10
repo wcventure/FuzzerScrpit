@@ -14,6 +14,8 @@ def main(argv):
     OutputPath = ""
     TargetFile2 = ""
     OutputPath2 = ""
+    TargetFile3 = ""
+    OutputPath3 = ""
     DelayTime = ""
 
     try:
@@ -43,33 +45,33 @@ def main(argv):
             OutputPath2 = arg
         elif opt in ("-x", "--target3"):
             TargetFile3 = arg
-        elif opt in ("-t", "--output3"):
+        elif opt in ("-y", "--output3"):
             OutputPath3 = arg
         elif opt in ("-d", "--delay"):
             DelayTime = arg
 
     if TargetFile == "":
-        print('Error: Command line is empty')
+        print('Error: TargetFile1 is empty')
         print('Tips: Using -h to view help')
         sys.exit(2)
     if OutputPath == "":
-        print('Error: Crash folder is empty')
+        print('Error: OutputPath1 is empty')
         print('Tips: Using -h to view help')
         sys.exit(2)
     if TargetFile2 == "":
-        print('Error: Command line is empty')
+        print('Error: TargetFile2 is empty')
         print('Tips: Using -h to view help')
         sysexit(2)
     if OutputPath2 == "":
-        print('Error: Crash folder is empty')
+        print('Error: OutputPath2 is empty')
         print('Tips: Using -h to view help')
         sys.exit(2)
     if TargetFile3 == "":
-        print('Error: Command line is empty')
+        print('Error: TargetFile3 is empty')
         print('Tips: Using -h to view help')
         sysexit(2)
     if OutputPath3 == "":
-        print('Error: Crash folder is empty')
+        print('Error: COutputPath3 is empty')
         print('Tips: Using -h to view help')
         sys.exit(2)
     if DelayTime == "":

@@ -45,19 +45,19 @@ def main(argv):
             DelayTime = arg
 
     if TargetFile == "":
-        print('Error: Command line is empty')
+        print('Error: TargetFile1 is empty')
         print('Tips: Using -h to view help')
         sys.exit(2)
     if OutputPath == "":
-        print('Error: Crash folder is empty')
+        print('Error: OutputPath1 is empty')
         print('Tips: Using -h to view help')
         sys.exit(2)
     if TargetFile2 == "":
-        print('Error: Command line is empty')
+        print('Error: TargetFile2 is empty')
         print('Tips: Using -h to view help')
         sysexit(2)
     if OutputPath2 == "":
-        print('Error: Crash folder is empty')
+        print('Error: OutputPath2 is empty')
         print('Tips: Using -h to view help')
         sys.exit(2)
     if DelayTime == "":

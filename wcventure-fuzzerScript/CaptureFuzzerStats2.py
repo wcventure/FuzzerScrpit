@@ -52,7 +52,7 @@ def main(argv):
         print('Error: Crash folder is empty')
         print('Tips: Using -h to view help')
         sys.exit(2)
-    if TargetFile1 == "":
+    if TargetFile2 == "":
         print('Error: Command line is empty')
         print('Tips: Using -h to view help')
         sysexit(2)

@@ -71,15 +71,17 @@ def main(argv):
 
     filelist=[]
     file_name(CrashPath, filelist)
-    filelist.sort()
-        
+    UniqueSet = set(filelist)
+    UniqueList = list(UniqueSet)
+    UniqueList.sort()
+
     os.popen("echo '\n@@@@@@@@@@@@@@@@@@@@@@@@@@     Start    @@@@@@@@@@@@@@@@@@@@@@@@@@\n'" + " > log.txt", 'r')  
 
-    for eachfile in filelist:
+    for eachfile in UniqueList:
 
         os.popen("echo '----------------- go on -------------------'" + " >> " + OutputFile, 'r')
         os.popen("echo 'Commond Line: " + Command + eachfile + "\n'" + " >> " + OutputFile, 'r')
-        os.popen("echo 'File Name: "eachfile + "\n'" + " >> " + OutputFile, 'r')
+        os.popen("echo 'File Name: " + eachfile + "\n'" + " >> " + OutputFile, 'r')
         os.system(Command + ' ' + eachfile + ' 2>> ' + OutputFile)
         time.sleep(0.01)
         print("Finished: " + eachfile)

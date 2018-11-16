@@ -90,9 +90,12 @@ def main(argv):
                     a,b,c = right.split(',',2)
                     SLenTotal += int(b.strip())
                     MSizeTotal += int(c.strip())
-                    
-            SLenList.append(int(SLenTotal/TopNum))
-            MSizeList.append(int(MSizeTotal/TopNum))
+            if TopNum == 0:
+                SLenList.append(0)
+                MSizeList.append(0)
+            else:
+                SLenList.append(int(SLenTotal/TopNum))
+                MSizeList.append(int(MSizeTotal/TopNum))
 
 
     with open ('./tmp.txt', 'w+') as fi:

@@ -88,7 +88,10 @@ def main(argv):
                 os.system('(/usr/bin/time --f %M '+ CommandLine + ' ' + eachTop + ') 2>> 2.txt')
             with open ('2.txt', 'r') as two:
                 for line in two.readlines():
-                    RSS_tmp_list.append(int(line))
+                    try:
+                        RSS_tmp_list.append(int(line))
+                    except:
+                        pass
 
             if os.path.exists('2.txt'):
                     os.system('rm -rf 2.txt')

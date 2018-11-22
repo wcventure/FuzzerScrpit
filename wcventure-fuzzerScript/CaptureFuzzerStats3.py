@@ -101,7 +101,7 @@ def main(argv):
 
     # start
 
-    for k in range(1, 145):
+    for k in range(1, 99):
         time.sleep(int(DelayTime))
         if k==0 or k==1 or k==2 or k ==3 or k==4 or k==5 or k==6 or k==7 or k==8 or k==9:
             name = '0' + str(k)

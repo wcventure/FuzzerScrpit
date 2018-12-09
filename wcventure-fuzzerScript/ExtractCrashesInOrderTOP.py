@@ -70,7 +70,6 @@ def main(argv):
     # 依次文件
     for eachfile in fileList:
         with open (TargetFolder + eachfile, 'r') as f:
-            TopNum = 0
             SLenTotal = 0
             MSizeTotal = 0
             for line in f.readlines():
@@ -93,18 +92,12 @@ def main(argv):
                     left,right = line.split(':',1)
                     TotalFailToAlloc.append(right.strip())
                 
-                if 'TOP_MEM_' in line:
+                if 'TOP_MEM_0' in line:
                     TopNum += 1
                     left,right = line.split(':',1)
                     a,b,c = right.split(',',2)
-                    SLenTotal += int(b.strip())
-                    MSizeTotal += int(c.strip())
-            if TopNum == 0:
-                SLenList.append(0)
-                MSizeList.append(0)
-            else:
-                SLenList.append(int(SLenTotal/TopNum))
-                MSizeList.append(int(MSizeTotal/TopNum))
+                    SLenList.append(int(b.strip()))
+                    MSizeList.append(int(c.strip()))
 
 
     with open ('./tmp.txt', 'w+') as fi:

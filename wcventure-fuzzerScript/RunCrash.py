@@ -75,18 +75,18 @@ def main(argv):
     UniqueList = list(UniqueSet)
     UniqueList.sort()
 
-    os.popen("echo '\n@@@@@@@@@@@@@@@@@@@@@@@@@@     Start    @@@@@@@@@@@@@@@@@@@@@@@@@@\n'" + " > log.txt", 'r')  
+    os.system("echo '\n@@@@@@@@@@@@@@@@@@@@@@@@@@     Start    @@@@@@@@@@@@@@@@@@@@@@@@@@\n'" + " > log.txt")  
 
     for eachfile in UniqueList:
 
-        os.popen("echo '----------------- go on -------------------'" + " >> " + OutputFile, 'r')
-        os.popen("echo 'Commond Line: " + Command + eachfile + "\n'" + " >> " + OutputFile, 'r')
-        os.popen("echo 'File Name: " + eachfile + "\n'" + " >> " + OutputFile, 'r')
+        os.system("echo '----------------- go on -------------------'" + " >> " + OutputFile)
+        os.system("echo 'Commond Line: " + Command + eachfile + "\n'" + " >> " + OutputFile)
+        os.system("echo 'File Name: " + eachfile + "\n'" + " >> " + OutputFile)
         os.system(Command + ' ' + eachfile + ' 2>> ' + OutputFile)
         time.sleep(0.01)
         print("Finished: " + eachfile)
 
-    os.popen("echo '\n@@@@@@@@@@@@@@@@@@@@@@@@@@ Finished All @@@@@@@@@@@@@@@@@@@@@@@@@@\n'" + " >> " + OutputFile, 'r')
+    os.system("echo '\n@@@@@@@@@@@@@@@@@@@@@@@@@@ Finished All @@@@@@@@@@@@@@@@@@@@@@@@@@\n'" + " >> " + OutputFile)
     time.sleep(0.01)
 
 

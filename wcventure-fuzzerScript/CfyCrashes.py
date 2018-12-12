@@ -84,11 +84,12 @@ def main(argv):
                 index = line.find('AddressSanitizer CHECK failed')
                 tmp = line[index:].strip()
                 CrashDesc = tmp.strip()
-            elif "Aborted (core dumped)" in line:
+            elif "Aborted (core dumped)" in line or "Aborted" in line:
                 InputNameList.append(Name)
                 crashTypeList.append(CrashType)
                 crashDescriptionList.append(CrashDesc)
                 # print(Name, CrashType, CrashDesc)
+                print(Name)
 
     # Statistics
 

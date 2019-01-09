@@ -7,6 +7,7 @@ import os
 import time
 import datetime
 import csv
+import re
 
 def main(argv):
     #通过 getopt模块 来识别参数demo
@@ -48,6 +49,8 @@ def main(argv):
     InputNameList = []
     crashTypeList = []
     crashDescriptionList = []
+    LeakByte = 0
+    LeakAllocation = 0
 
     
     Name = ''
@@ -80,11 +83,17 @@ def main(argv):
                     CrashType = left.strip()                
             elif "SUMMARY: AddressSanitizer"  in line:
                 CrashDesc = line.strip()
+                if "leaked" and "allocation" in line:
+                    CrashType = "memory leaks"
+                    tupleLA = re.findall(r"\d+", line)
+                    LeakByte = LeakByte + int(tupleLA[0])
+                    LeakAllocation = LeakAllocation + int(tupleLA[1])
             elif "AddressSanitizer CHECK failed" in line:
                 index = line.find('AddressSanitizer CHECK failed')
                 tmp = line[index:].strip()
                 CrashDesc = tmp.strip()
-            elif "Aborted (core dumped)" in line or "Aborted" in line:
+            #if "Aborted (core dumped)" in line or "Aborted" in line or "SUMMARY: AddressSanitizer: " in line:
+            if "SUMMARY: AddressSanitizer: " in line:
                 InputNameList.append(Name)
                 crashTypeList.append(CrashType)
                 crashDescriptionList.append(CrashDesc)
@@ -134,6 +143,11 @@ def main(argv):
             csv_write.writerow([])
             for i in range(0, len(UniqueTypeList)):
                 csv_write.writerow([str(UniqueTypeList[i]),str(UniqueNumList[i])])
+            csv_write.writerow([])
+            csv_write.writerow([])
+            csv_write.writerow(["Leak Byte(s)", LeakByte, "byte(s)"])
+            csv_write.writerow(["Leak Allocation(s)", LeakAllocation, "allocation(s)"])
+            
         print('@@@ write over @@@\n')
     
     '''

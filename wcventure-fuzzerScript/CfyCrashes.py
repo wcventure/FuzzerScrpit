@@ -100,8 +100,11 @@ def main(argv):
             elif "Assertion" and "failed" in line:
                 CrashDesc = line.strip()
                 CrashType = "Assertion failed"
+            elif "terminate called after throwing an instance of" in line:
+                CrashDesc = line.strip()
+                CrashType = "terminate called"
             #if "Aborted (core dumped)" in line or "Aborted" in line or "SUMMARY: AddressSanitizer: " in line:
-            if "SUMMARY: AddressSanitizer: " in line or "Assertion `" in line:
+            if "SUMMARY: AddressSanitizer: " in line or "Assertion `" in line or "terminate called after throwing an instance of" in line:
                 InputNameList.append(Name)
                 crashTypeList.append(CrashType)
                 crashDescriptionList.append(CrashDesc)

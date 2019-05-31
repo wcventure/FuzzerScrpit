@@ -57,6 +57,7 @@ def main(argv):
     CrashType = ''
     CrashDesc = ''
     with open (LogFile, 'rb') as f:
+        bugID = 0
         for temp_line in f.readlines():
             line = ""
             try:
@@ -73,7 +74,7 @@ def main(argv):
             elif "ERROR: AddressSanitizer:" in line:
                 rindex = line.rfind(':')
                 tmp = line[rindex+1:].strip()
-                left = tmp.split(' ',1)[0]
+                left, right = tmp.split(' ',1)
                 CrashType = left.strip()
             elif "WARNING: AddressSanitizer" in line or "ERROR: AddressSanitizer" in line:
                 rindex = line.find(':')
@@ -97,15 +98,18 @@ def main(argv):
                 index = line.find('AddressSanitizer CHECK failed')
                 tmp = line[index:].strip()
                 CrashDesc = tmp.strip()
-            elif "Assertion" and "failed" in line:
-                CrashDesc = line.strip()
-                CrashType = "Assertion failed"
-            #if "Aborted (core dumped)" in line or "Aborted" in line or "SUMMARY: AddressSanitizer: " in line:
-            if "SUMMARY: AddressSanitizer: " in line or "Assertion `" in line:
+            elif "#" in line:
+                tmplist = re.findall(r"\d+:\d+",line)
+                if not tmplist == []:
+                    ll ,rr = tmplist[0].split(':',1)
+                    bugID = bugID + int(ll)
+            if "Aborted (core dumped)" in line or "Aborted" in line or "SUMMARY: AddressSanitizer: " in line:
+            #if "SUMMARY: AddressSanitizer: " in line:
                 InputNameList.append(Name)
-                crashTypeList.append(CrashType)
+                crashTypeList.append(CrashType + '-' + str(bugID))
                 crashDescriptionList.append(CrashDesc)
                 # print(Name, CrashType, CrashDesc)
+                bugID = 0
                 print(Name)
 
     # Statistics

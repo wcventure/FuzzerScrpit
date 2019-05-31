@@ -75,7 +75,7 @@ def main(argv):
     UniqueList = list(UniqueSet)
     UniqueList.sort()
 
-    os.system("echo '\n@@@@@@@@@@@@@@@@@@@@@@@@@@     Start    @@@@@@@@@@@@@@@@@@@@@@@@@@\n'" + " > log.txt")  
+    os.system("echo '\n@@@@@@@@@@@@@@@@@@@@@@@@@@     Start    @@@@@@@@@@@@@@@@@@@@@@@@@@\n'" + " > " + OutputFile)  
 
     for eachfile in UniqueList:
 

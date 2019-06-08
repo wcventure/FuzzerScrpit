@@ -57,6 +57,7 @@ def main(argv):
     CrashType = ''
     CrashDesc = ''
     with open (LogFile, 'rb') as f:
+        findEndFlag = 0
         for temp_line in f.readlines():
             line = ""
             try:
@@ -64,6 +65,7 @@ def main(argv):
             except:
                 pass
             if "--- go on ---" in line:
+                findEndFlag = 0
                 Name = ''
                 CrashType = ''
                 CrashDesc = ''
@@ -103,20 +105,26 @@ def main(argv):
             elif "terminate called after throwing an instance of" in line:
                 CrashDesc = line.strip()
                 CrashType = "terminate called"
-            #if "Aborted (core dumped)" in line or "Aborted" in line or "SUMMARY: AddressSanitizer: " in line:
-            if "SUMMARY: AddressSanitizer: " in line or "Assertion `" in line or "terminate called after throwing an instance of" in line:
-                InputNameList.append(Name)
-                crashTypeList.append(CrashType)
-                crashDescriptionList.append(CrashDesc)
-                # print(Name, CrashType, CrashDesc)
-                print(Name)
+            if findEndFlag == 0:
+                if "SUMMARY: AddressSanitizer: " in line or "Assertion `" in line or "terminate called after throwing an instance of" in line or "Aborted" in line:
+                    findEndFlag = 1
+                    InputNameList.append(Name)
+                    crashTypeList.append(CrashType)
+                    crashDescriptionList.append(CrashDesc)
+                    # print(Name, CrashType, CrashDesc)
+                    print(Name)
 
     # Statistics
 
     UniqueCrashList = set(crashDescriptionList)
     UniqueCrashNum = len(UniqueCrashList)
-    print('TotalCrashNum = ', UniqueCrashNum)
-    print('UniqueCrashNum = ', len(InputNameList))
+
+    for each in UniqueCrashList:
+        print(each.replace('SUMMARY: ',''))
+    print('')
+
+    print('TotalCrashNum = ', len(InputNameList))
+    print('UniqueCrashNum = ', UniqueCrashNum)
     print('----------------------------')
 
     TypeSet = set(crashTypeList)
@@ -132,10 +140,12 @@ def main(argv):
 
     for i in range(0, len(UniqueTypeList)):
         print(str(UniqueTypeList[i]),',',str(UniqueNumList[i]))
+
+    
     print('----------------------------')
-    for each in UniqueCrashList:
-        print(each.replace('SUMMARY: ',''))
-    print('')
+    print("Leak Byte(s)", LeakByte, "byte(s)")
+    print("Leak Allocation(s)", LeakAllocation, "allocation(s)")
+    print('----------------------------')
 
     
             
@@ -148,8 +158,8 @@ def main(argv):
                 csv_write.writerow([InputNameList[i],crashTypeList[i],crashDescriptionList[i]])
             csv_write.writerow([])
             csv_write.writerow([])
-            csv_write.writerow(['TotalCrashNum', UniqueCrashNum])
-            csv_write.writerow(['UniqueCrashNum', len(InputNameList)])
+            csv_write.writerow(['TotalCrashNum', len(InputNameList)])
+            csv_write.writerow(['UniqueCrashNum', UniqueCrashNum])
             csv_write.writerow([])
             csv_write.writerow([])
             for i in range(0, len(UniqueTypeList)):

@@ -81,9 +81,9 @@ def main(argv):
                 rindex = line.find(':')
                 
                 if "failed to allocate" in  line and 'WARNING' in line:
-                    CrashType = 'Failed-to-allocate(WARNING)'
+                    CrashType = 'Failed-to-allocate'
                 elif "failed to allocate" in  line and 'ERROR' in line:
-                    CrashType = 'Failed-to-allocate(ERROR)'
+                    CrashType = 'Failed-to-allocate'
                 else:
                     tmp = line[rindex+1:].strip()
                     left, right = tmp.split(' ',1)
@@ -99,6 +99,8 @@ def main(argv):
                 index = line.find('AddressSanitizer CHECK failed')
                 tmp = line[index:].strip()
                 CrashDesc = tmp.strip()
+                if CrashType == "":
+                    CrashType = "Failed-to-allocate"
             elif "Assertion" and "failed" in line:
                 CrashDesc = line.strip()
                 CrashType = "Assertion failed"
@@ -106,7 +108,7 @@ def main(argv):
                 CrashDesc = line.strip()
                 CrashType = "terminate called"
             if findEndFlag == 0:
-                if "SUMMARY: AddressSanitizer: " in line or "Assertion `" in line or "terminate called after throwing an instance of" in line or "Aborted" in line:
+                if "SUMMARY: AddressSanitizer: " in line or "Assertion `" in line or "terminate called after throwing an instance of" in line or "Aborted" in line or "in _start (" in line:
                     findEndFlag = 1
                     InputNameList.append(Name)
                     crashTypeList.append(CrashType)

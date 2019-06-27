@@ -79,15 +79,20 @@ def main(argv):
 
     for eachfile in UniqueList:
 
+        if "MOpt " in eachfile:
+            eachfile = eachfile.replace("MOpt ", "MOpt\ ")
+            eachfile = eachfile.replace("core ", "core\ ")
+            
+
         os.system("echo '----------------- go on -------------------'" + " >> " + OutputFile)
         if "@@" in Command:
             os.system("echo 'Commond Line: " + Command.replace('@@', eachfile) + "\n'" + " >> " + OutputFile)
-            os.system("echo 'File Name: " + eachfile.replace("MOpt ", "MOpt\ ") + "\n'" + " >> " + OutputFile)
-            os.system(Command.replace("@@", eachfile.replace("MOpt ", "MOpt\ ")) + ' 2>> ' + OutputFile)
+            os.system("echo 'File Name: " + eachfile + "\n'" + " >> " + OutputFile)
+            os.system(Command.replace("@@", eachfile) + ' 2>> ' + OutputFile)
         else:
             os.system("echo 'Commond Line: " + Command + " " + eachfile + "\n'" + " >> " + OutputFile)
-            os.system("echo 'File Name: " + eachfile.replace("MOpt ", "MOpt\ ") + "\n'" + " >> " + OutputFile)
-            os.system(Command + ' ' + eachfile.replace("MOpt ", "MOpt\ ") + ' 2>> ' + OutputFile)
+            os.system("echo 'File Name: " + eachfile + "\n'" + " >> " + OutputFile)
+            os.system(Command + ' ' + eachfile + ' 2>> ' + OutputFile)
         time.sleep(0.01)
         print("Finished: " + eachfile)
 

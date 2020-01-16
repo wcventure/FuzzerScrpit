@@ -71,6 +71,8 @@ def main(argv):
             elif "File Name:" in line:
                 rindex = line.rfind('/')
                 Name = line[rindex+1:].strip()
+            elif "ERROR: AddressSanitizer: requested allocation size" in line or "WARNING: AddressSanitizer: requested allocation size" in line:
+                CrashType = 'Failed-to-allocate'
             elif "ERROR: AddressSanitizer:" in line:
                 rindex = line.rfind(':')
                 tmp = line[rindex+1:].strip()
@@ -80,16 +82,16 @@ def main(argv):
                 rindex = line.find(':')
                 
                 if "failed to allocate" in  line and 'WARNING' in line:
-                    CrashType = 'Failed-to-allocate(WARNING)'
+                    CrashType = 'Failed-to-allocate'
                 elif "failed to allocate" in  line and 'ERROR' in line:
-                    CrashType = 'Failed-to-allocate(ERROR)'
+                    CrashType = 'Failed-to-allocate'
                 else:
                     tmp = line[rindex+1:].strip()
                     left, right = tmp.split(' ',1)
                     CrashType = left.strip()                
             elif "SUMMARY: AddressSanitizer"  in line:
                 CrashDesc = line.strip()
-                if "leaked" and "allocation" in line:
+                if "leaked" in line and "allocation" in line:
                     CrashType = "memory leaks"
                     tupleLA = re.findall(r"\d+", line)
                     LeakByte = LeakByte + int(tupleLA[0])
